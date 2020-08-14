@@ -1,0 +1,29 @@
+version: "3.8"
+networks:
+    default:
+        name: lab-docker-compose-mongo
+services:
+    portainer:
+        image: portainer/portainer
+        container_name: lab-docker-compose-mongo-portainer
+        restart: always
+        ports:
+            - 9001:9000
+        volumes: 
+            - /var/run/docker.sock:/var/run/docker.sock
+    mongo:
+      image: mongo
+      container_name: lab-docker-compose-mongo-db
+      restart: always
+      environment:
+        MONGO_INITDB_ROOT_USERNAME: root
+        MONGO_INITDB_ROOT_PASSWORD: 123456
+    mongo-express:
+        image: mongo-express
+        container_name: lab-docker-compose-mongo-express
+        restart: always
+        ports:
+            - 3001:8081
+        environment:
+            ME_CONFIG_MONGODB_ADMINUSERNAME: root
+            ME_CONFIG_MONGODB_ADMINPASSWORD: 123456
